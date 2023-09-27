@@ -220,6 +220,9 @@ func (s *testServer) UnaryCall(ctx context.Context, in *testpb.SimpleRequest) (*
 	if pr.Addr == net.Addr(nil) {
 		return nil, status.Error(codes.DataLoss, "failed to get peer address")
 	}
+	if pr.LocalAddr == net.Addr(nil) {
+		return nil, status.Error(codes.DataLoss, "failed to get local address")
+	}
 	if s.security != "" {
 		// Check Auth info
 		var authType, serverName string
