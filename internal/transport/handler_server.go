@@ -380,7 +380,8 @@ func (ht *serverHandlerTransport) HandleStreams(startStream func(*Stream)) {
 		contentSubtype: ht.contentSubtype,
 	}
 	pr := &peer.Peer{
-		Addr: ht.RemoteAddr(),
+		Addr:      ht.RemoteAddr(),
+		LocalAddr: ht.req.Context().Value(http.LocalAddrContextKey).(net.Addr),
 	}
 	if req.TLS != nil {
 		pr.AuthInfo = credentials.TLSInfo{State: *req.TLS, CommonAuthInfo: credentials.CommonAuthInfo{SecurityLevel: credentials.PrivacyAndIntegrity}}
